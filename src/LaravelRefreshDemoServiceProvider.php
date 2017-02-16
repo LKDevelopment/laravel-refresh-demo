@@ -16,7 +16,7 @@ use LKDevelopment\LaravelDemoRefresh\Middleware\DemoRefreshMiddleware;
  * Class LaravelDemoRefreshServiceProvider
  * @package LKDevelopment\LaravelDemoRefresh
  */
-class LaravelDemoRefreshServiceProvider extends ServiceProvider
+class LaravelRefreshDemoServiceProvider extends ServiceProvider
 {
     /**
      *
