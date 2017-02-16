@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lukaskammerling
- * Date: 16.02.17
- * Time: 14:57
- */
 
 namespace LKDevelopment\LaravelRefreshDemo\Facade;
 

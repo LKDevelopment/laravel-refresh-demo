@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lukaskammerling
- * Date: 15.02.17
- * Time: 22:20
- */
 
 namespace LKDevelopment\LaravelRefreshDemo\Refresher;
 

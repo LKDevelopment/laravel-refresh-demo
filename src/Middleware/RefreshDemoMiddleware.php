@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lukaskammerling
- * Date: 15.02.17
- * Time: 21:48
- */
+
 
 namespace LKDevelopment\LaravelRefreshDemo\Middleware;
 
