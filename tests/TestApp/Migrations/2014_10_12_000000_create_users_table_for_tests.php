@@ -13,7 +13,7 @@ class CreateUsersTableForTests extends Migration
      */
     public function up()
     {
-        Schema::create('testusers', function (Blueprint $table) {
+        Schema::create('test_users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
@@ -30,6 +30,6 @@ class CreateUsersTableForTests extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('testusers');
+        Schema::dropIfExists('test_users');
     }
 }

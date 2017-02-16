@@ -11,13 +11,29 @@ namespace LKDevelopment\LaravelRefreshDemo\Tests;
 use LKDevelopment\LaravelRefreshDemo\LaravelRefreshDemoServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
+/**
+ * Class TestCase
+ * @package LKDevelopment\LaravelRefreshDemo\Tests
+ */
 abstract class TestCase extends Orchestra
 {
 
+    /**
+     * @return \Illuminate\Foundation\Application
+     */
+    protected function getApp()
+    {
+        return $this->app;
+    }
+
+
+    /**
+     *
+     */
     public function setUp()
     {
         parent::setUp();
-        $this->withFactories(__DIR__.'/TestApp/Factories/');
+        $this->withFactories(__DIR__.'/TestApp/Factories');
     }
 
 
@@ -37,7 +53,9 @@ abstract class TestCase extends Orchestra
         $this->setUpDatabase();
     }
 
-
+    /**
+     *
+     */
     protected function setUpDatabase()
     {
         include_once __DIR__.'/TestApp/Migrations/2014_10_12_000000_create_users_table_for_tests.php';

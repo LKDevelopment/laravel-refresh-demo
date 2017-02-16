@@ -1,6 +1,7 @@
 <?php
+use LKDevelopment\LaravelRefreshDemo\Tests\TestApp\Models\TestUser;
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(\LKDevelopment\LaravelRefreshDemo\Tests\TestApp\Models\TestUser::class, function (Faker\Generator $faker) {
+$factory->define(TestUser::class, function (Faker\Generator $faker) {
     static $password;
 
     return [

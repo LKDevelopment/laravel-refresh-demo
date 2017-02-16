@@ -98,7 +98,7 @@ class RefreshDemo
         }
         if ($this->enabled === true) {
             $this->performRefreshIfNeeded();
-            if (! $this->app->runningInConsole() && ! $this->checkIfJsonRequest($request) && ! $this->doNotInjectOnDebugBarRequests($request)) {
+            if ((! $this->app->runningInConsole() && ! $this->checkIfJsonRequest($request) && ! $this->doNotInjectOnDebugBarRequests($request)) || $this->app->runningUnitTests()) {
                 $this->injectDemoRefreshPopUp($response);
             }
         }
