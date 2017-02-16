@@ -10,7 +10,7 @@ namespace LKDevelopment\LaravelRefreshDemo\Tests\Database;
 
 use LKDevelopment\LaravelRefreshDemo\Tests\TestCase;
 
-class TestDatabaseRefreshment extends TestCase
+class DatabaseRefreshmentTest extends TestCase
 {
     public function test_database_refreshment(){
         $this->assertThat(true);
