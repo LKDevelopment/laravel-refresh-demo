@@ -6,7 +6,7 @@
  * Time: 22:13
  */
 
-namespace LKDevelopment\LaravelDemoRefresh\Injector;
+namespace LKDevelopment\LaravelRefreshDemo\Injector;
 
 
 class JavascriptInjector extends BaseInjector
@@ -31,6 +31,6 @@ class JavascriptInjector extends BaseInjector
      */
     protected function renderInjectableContent()
     {
-        return view('demo-refresh::baseView');
+        return view('refresh-demo::baseView');
     }
 }

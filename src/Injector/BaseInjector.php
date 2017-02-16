@@ -6,12 +6,12 @@
  * Time: 22:07
  */
 
-namespace LKDevelopment\LaravelDemoRefresh\Injector;
+namespace LKDevelopment\LaravelRefreshDemo\Injector;
 
 
 /**
  * Class BaseInjector
- * @package LKDevelopment\LaravelDemoRefresh\Middleware\Injector
+ * @package LKDevelopment\LaravelRefreshDemo\Middleware\Injector
  */
 abstract class BaseInjector
 {

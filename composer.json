@@ -1,12 +1,12 @@
 {
-    "name": "lkdevelopment/laravel-demo-refresh",
+    "name": "lkdevelopment/laravel-refresh-demo",
     "license": "MIT",
     "require": {
         "laravel/framework": "^5.4.9"
     },
     "autoload": {
         "psr-4": {
-            "LKDevelopment\\LaravelDemoRefresh\\": "src/"
+            "LKDevelopment\\LaravelRefreshDemo\\": "src/"
         }
     }
 }

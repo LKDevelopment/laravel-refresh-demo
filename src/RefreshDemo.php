@@ -6,21 +6,21 @@
  * Time: 21:36
  */
 
-namespace LKDevelopment\LaravelDemoRefresh;
+namespace LKDevelopment\LaravelRefreshDemo;
 
 
 use Carbon\Carbon;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use LKDevelopment\LaravelDemoRefresh\Injector\JavascriptInjector;
-use LKDevelopment\LaravelDemoRefresh\Refresher\BaseRefresher;
+use LKDevelopment\LaravelRefreshDemo\Injector\JavascriptInjector;
+use LKDevelopment\LaravelRefreshDemo\Refresher\BaseRefresher;
 
 /**
  * Class DemoRefresh
- * @package LKDevelopment\LaravelDemoRefresh
+ * @package LKDevelopment\LaravelRefreshDemo
  */
-class DemoRefresh
+class RefreshDemo
 {
     /**
      *
@@ -30,6 +30,10 @@ class DemoRefresh
      * @var Application
      */
     protected $app;
+    /**
+     * @var boolean
+     */
+    protected $enabled;
 
     /**
      * DemoRefresh constructor.
@@ -45,6 +49,23 @@ class DemoRefresh
      */
     public function boot()
     {
+        $this->enabled = config('refresh-demo.enabled');
+    }
+
+    /**
+     * @return void
+     */
+    protected function performRefreshIfNeeded()
+    {
+        if ($this->checkIfNeedRefresh() === true) {
+            $refresherClassName = config('refresh-demo.refresher');
+            $refresher = new $refresherClassName();
+            /**
+             * @var BaseRefresher $refresher
+             */
+            $refresher->refreshData();
+            $this->placeRefreshTimestampFile();
+        }
 
     }
 
@@ -57,7 +78,7 @@ class DemoRefresh
         if (file_exists($path)) {
             $timestampFromFile = file_get_contents($path);
             $timeFromFile = Carbon::createFromTimestamp($timestampFromFile);
-            if ($timeFromFile->addSeconds(config('demo-refresh.refreshAll')) > Carbon::now()) {
+            if ($timeFromFile->addSeconds(config('refresh-demo.refreshAllMinutes')) > Carbon::now()) {
                 return false;
             }
         }
@@ -74,27 +95,25 @@ class DemoRefresh
             unlink($path);
         }
         $handle = fopen($path, 'w+');
-        fwrite($handle, Carbon::now()->timestamp);
+        fwrite($handle, Carbon::now()->second(0)->timestamp);
         fclose($handle);
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function modifyResponse(Request $request, Response $response)
     {
-        if (config('demo-refresh.enabled') === true) {
-            if ($this->checkIfNeedRefresh() === true) {
-                $refresherClassName = config('demo-refresh.refresher');
-                $refresher = new $refresherClassName();
-                /**
-                 * @var BaseRefresher $refresher
-                 */
-                $refresher->refreshData();
-                $this->placeRefreshTimestampFile();
+        if($this->enabled == null){
+            $this->boot();
+        }
+        if ($this->enabled === true) {
+            $this->performRefreshIfNeeded();
+            if (!$this->app->runningInConsole()) {
+                $this->injectDemoRefreshPopUp($response);
             }
-
-            if ($this->app->runningInConsole() || $this->app->runningUnitTests()) {
-                return $response;
-            }
-            $this->injectDemoRefreshPopUp($response);
         }
         return $response;
     }
@@ -118,17 +137,26 @@ class DemoRefresh
     }
 
     /**
-     * @return Carbon
+     * @return \Carbon\Carbon
      */
     public static function getNextRollback()
     {
         $path = storage_path('app/' . self::TIME_STORAGE_FILE_NAME);
 
         if (file_exists($path)) {
-            $carbon = with(Carbon::createFromTimestamp(file_get_contents($path)))->addSeconds(config('demo-refresh.refreshAll'));
+            $carbon = Carbon::createFromTimestamp(file_get_contents($path));
         } else {
-            $carbon = Carbon::now()->addSeconds(config('demo-refresh.refreshAll'));
+            $carbon = Carbon::now();
         }
-        return $carbon;
+        return \RefreshDemo::calculateTimeStampForNextRefresh($carbon);
+    }
+
+    /**
+     * @param \Carbon\Carbon $carbon
+     * @return \Carbon\Carbon
+     */
+    public function calculateTimeStampForNextRefresh(Carbon $carbon)
+    {
+        return $carbon->second(0)->addSeconds(config('refresh-demo.refreshAllMinutes'));
     }
 }

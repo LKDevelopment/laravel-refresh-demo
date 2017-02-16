@@ -6,7 +6,7 @@
  * Time: 11:32
  */
 
-namespace LKDevelopment\LaravelDemoRefresh\Controller;
+namespace LKDevelopment\LaravelRefreshDemo\Controller;
 
 
 class DemoRefreshController

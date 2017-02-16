@@ -6,7 +6,7 @@
  * Time: 21:48
  */
 
-namespace LKDevelopment\LaravelDemoRefresh\Middleware;
+namespace LKDevelopment\LaravelRefreshDemo\Middleware;
 
 use Error;
 use Closure;
@@ -14,31 +14,31 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Debug\ExceptionHandler;
-use LKDevelopment\LaravelDemoRefresh\DemoRefresh;
+use LKDevelopment\LaravelRefreshDemo\RefreshDemo;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 /**
  * Class DemoRefreshMiddleware
  * (Based on https://github.com/barryvdh/laravel-debugbar/blob/master/src/Middleware/Debugbar.php)
- * @package LKDevelopment\LaravelDemoRefresh\Middleware
+ * @package LKDevelopment\LaravelRefreshDemo\Middleware
  */
-class DemoRefreshMiddleware
+class RefreshDemoMiddleware
 {
     /**
      * @var Container
      */
     protected $container;
     /**
-     * @var DemoRefresh
+     * @var RefreshDemo
      */
     protected $demoRefresh;
 
     /**
      * DemoRefreshMiddleware constructor.
      * @param Container $container
-     * @param DemoRefresh $demoRefresh
+     * @param RefreshDemo $demoRefresh
      */
-    public function __construct(Container $container, DemoRefresh $demoRefresh)
+    public function __construct(Container $container, RefreshDemo $demoRefresh)
     {
         $this->container = $container;
         $this->demoRefresh = $demoRefresh;
@@ -63,7 +63,7 @@ class DemoRefreshMiddleware
             $e = new FatalThrowableError($error);
             $response = $this->handleException($request, $e);
         }
-        if (config('demo-refresh.enabled') === true) {
+        if (config('refresh-demo.enabled') === true) {
             // Modify the response to add the Demo Refresh Popover only if it is enabled
             $this->demoRefresh->modifyResponse($request, $response);
         }

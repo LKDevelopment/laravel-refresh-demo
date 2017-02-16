@@ -6,12 +6,12 @@
  * Time: 22:18
  */
 
-namespace LKDevelopment\LaravelDemoRefresh\Refresher;
+namespace LKDevelopment\LaravelRefreshDemo\Refresher;
 
 
 /**
  * Class BaseRefresher
- * @package LKDevelopment\LaravelDemoRefresh\Refresher
+ * @package LKDevelopment\LaravelRefreshDemo\Refresher
  */
 abstract class BaseRefresher
 {

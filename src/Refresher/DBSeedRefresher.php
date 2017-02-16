@@ -6,7 +6,7 @@
  * Time: 22:20
  */
 
-namespace LKDevelopment\LaravelDemoRefresh\Refresher;
+namespace LKDevelopment\LaravelRefreshDemo\Refresher;
 
 
 use Illuminate\Support\Facades\Artisan;
@@ -22,14 +22,14 @@ class DBSeedRefresher extends BaseRefresher
     public function refreshData()
     {
         $this->truncateTables();
-        foreach (config('demo-refresh.DBSeedRefresher.seeder') as $seeder) {
+        foreach (config('refresh-demo.DBSeedRefresher.seeder') as $seeder) {
             Artisan::call('db:seed',['--class' => $seeder]);
         }
     }
 
     protected function truncateTables()
     {
-        foreach (config('demo-refresh.DBSeedRefresher.tables') as $table) {
+        foreach (config('refresh-demo.DBSeedRefresher.tables') as $table) {
             if (Schema::hasTable($table)) {
                 DB::table($table)->truncate();
             }

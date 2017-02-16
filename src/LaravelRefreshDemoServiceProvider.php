@@ -6,15 +6,17 @@
  * Time: 21:35
  */
 
-namespace LKDevelopment\LaravelDemoRefresh;
+namespace LKDevelopment\LaravelRefreshDemo;
 
 
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use LKDevelopment\LaravelDemoRefresh\Middleware\DemoRefreshMiddleware;
+use LKDevelopment\LaravelRefreshDemo\Facade\RefreshDemo as RefreshDemoFacade;
+use LKDevelopment\LaravelRefreshDemo\Middleware\RefreshDemoMiddleware;
 
 /**
- * Class LaravelDemoRefreshServiceProvider
- * @package LKDevelopment\LaravelDemoRefresh
+ * Class LaravelRefreshDemoServiceProvider
+ * @package LKDevelopment\LaravelRefreshDemo
  */
 class LaravelRefreshDemoServiceProvider extends ServiceProvider
 {
@@ -23,18 +25,23 @@ class LaravelRefreshDemoServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'demo-refresh');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'demo-refresh');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'refresh-demo');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'refresh-demo');
 
         $this->publishes([
-            __DIR__ . '/../config/demo-refresh.php' => config_path('demo-refresh.php'),
+            __DIR__ . '/../config/refresh-demo.php' => config_path('refresh-demo.php'),
         ], 'config');
         $this->publishes([
-            __DIR__ . '/../resources/views' => base_path('resources/views/vendor/demo-refresh'),
+            __DIR__ . '/../resources/views' => base_path('resources/views/vendor/refresh-demo'),
         ], 'views');
         $this->publishes([
-            __DIR__ . '/../resources/lang' => base_path('resources/lang/vendor/demo-refresh'),
+            __DIR__ . '/../resources/lang' => base_path('resources/lang/vendor/refresh-demo'),
         ], 'lang');
+        $demoRefresh = $this->app['refresh-demo'];
+        /**
+         * @var $demoRefresh RefreshDemo
+         */
+        $demoRefresh->boot();
     }
 
     /**
@@ -43,19 +50,18 @@ class LaravelRefreshDemoServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/demo-refresh.php', 'demo-refresh'
+            __DIR__ . '/../config/refresh-demo.php', 'refresh-demo'
         );
-        $this->app->singleton('demo-refresh', function ($app) {
-            return new DemoRefresh($app);
+        $this->app->singleton('refresh-demo', function ($app) {
+            return new RefreshDemo($app);
         });
-
-        $demoRefresh = $this->app['demo-refresh'];
         /**
-         * @var $demoRefresh DemoRefresh
+         * Load Facade
          */
-        $demoRefresh->boot();
+        $loader = AliasLoader::getInstance();
+        $loader->alias('RefreshDemo', RefreshDemoFacade::class);
 
-        $this->registerMiddleware(DemoRefreshMiddleware::class);
+        $this->registerMiddleware(RefreshDemoMiddleware::class);
     }
 
     /**
