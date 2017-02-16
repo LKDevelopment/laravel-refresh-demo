@@ -16,7 +16,7 @@ abstract class TestCase extends Orchestra
 
     public function setUp()
     {
-
+        $this->withFactories(__DIR__.'/TestApp/factory.php');
     }
 
 
@@ -39,7 +39,7 @@ abstract class TestCase extends Orchestra
 
     protected function setUpDatabase()
     {
-        include_once __DIR__.'/migrations/2014_10_12_000000_create_users_table_for_tests.php';
+        include_once __DIR__.'/TestApp/Migrations/2014_10_12_000000_create_users_table_for_tests.php';
         (new \CreateUsersTableForTests())->up();
     }
 

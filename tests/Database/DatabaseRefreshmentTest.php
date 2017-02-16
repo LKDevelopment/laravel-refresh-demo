@@ -8,11 +8,17 @@
 
 namespace LKDevelopment\LaravelRefreshDemo\Tests\Database;
 
+use LKDevelopment\LaravelRefreshDemo\Tests\TestApp\Models\TestUser;
 use LKDevelopment\LaravelRefreshDemo\Tests\TestCase;
 
 class DatabaseRefreshmentTest extends TestCase
 {
-    public function test_database_refreshment(){
-        $this->assertThat(true);
+
+    public function test_database_refreshment()
+    {
+        $user_start = factory(TestUser::class)->create([ 'name' => 'Test1' ]);
+
+        $user_test = TestUser::find($user_start->id);
+        $this->assertEquals($user_start, $user_test);
     }
 }
