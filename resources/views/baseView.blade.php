@@ -4,7 +4,7 @@
 
 <script>
     var _laravel_refresh_demo_nextRollbackTimestamp = '{{ RefreshDemo::getNextRollback()->timestamp }}';
-    $('#_laravel_refresh_demo_nextRollback').html('{{ RefreshDemo::getNextRollback()->format(config('refresh-demo.views.dateTimeFormat')) }}');
+    $('#_laravel_refresh_demo_nextRollback').html('{{ RefreshDemo::getNextRollback()->format(trans('refresh-demo::refresh-demo.infoLine.dateTimeFormat')) }}');
     var _laravel_refresh_demo_timeout = window.setInterval(function () {
         if (_laravel_refresh_demo_nextRollbackTimestamp == Math.floor(Date.now() / 1000)) {
             window.clearTimeout(_laravel_refresh_demo_timeout);

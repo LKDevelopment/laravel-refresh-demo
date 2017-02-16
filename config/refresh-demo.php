@@ -22,11 +22,6 @@ return [
          * How much seconds should the user wait before he can access the page
          */
         'holdUserOnPopupForSeconds' => 10,
-        /*
-         * Which Date Time Format do you want in the info Line?
-         */
-        'dateTimeFormat' => 'H:i',
-
     ],
     /*
      * Configuration for the Out of the Box Refresh with Laravel Seed Configuration
