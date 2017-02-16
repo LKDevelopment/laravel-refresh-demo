@@ -3,22 +3,20 @@
  * Created by PhpStorm.
  * User: lukaskammerling
  * Date: 16.02.17
- * Time: 22:24
+ * Time: 22:24.
  */
 
 namespace LKDevelopment\LaravelRefreshDemo\Tests\Layout;
 
+use LKDevelopment\LaravelRefreshDemo\Tests\TestCase;
 use LKDevelopment\LaravelRefreshDemo\Refresher\RefreshWithSeeds;
 use LKDevelopment\LaravelRefreshDemo\Tests\TestApp\Seeder\UserTestSeeder;
-use LKDevelopment\LaravelRefreshDemo\Tests\TestCase;
 
 /**
- * Class LayoutTest
- * @package LKDevelopment\LaravelRefreshDemo\Tests\Layout
+ * Class LayoutTest.
  */
-class LayoutTest extends TestCase
+class LayoutInjectionTest extends TestCase
 {
-
     /**
      * @return mixed
      */
@@ -27,14 +25,10 @@ class LayoutTest extends TestCase
         $this->getApp()['config']->set('app.locale', 'en');
         $this->getApp()['config']->set('refresh-demo.refreshAllMinutes', 0);
         $this->getApp()['config']->set('refresh-demo.refresher', RefreshWithSeeds::class);
-        $this->getApp()['config']->set('refresh-demo.RefreshWithSeedsConfiguration.tables', [ 'test_users' ]);
-        $this->getApp()['config']->set('refresh-demo.RefreshWithSeedsConfiguration.seeder', [ UserTestSeeder::class ]);
+        $this->getApp()['config']->set('refresh-demo.RefreshWithSeedsConfiguration.tables', ['test_users']);
+        $this->getApp()['config']->set('refresh-demo.RefreshWithSeedsConfiguration.seeder', [UserTestSeeder::class]);
     }
 
-
-    /**
-     *
-     */
     public function test_injected_response()
     {
         $this->setUpRefreshWithSeeder();

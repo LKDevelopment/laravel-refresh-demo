@@ -1,4 +1,5 @@
 <?php
+
 return [
     'refreshModal' => [
         'header' => 'Rollback in Progress!',
@@ -7,5 +8,5 @@ return [
     'infoLine' => [
         'text' => 'Next Demo Application Rollback at {time}',
         'dateTimeFormat' => 'h:i a',
-    ]
+    ],
 ];
