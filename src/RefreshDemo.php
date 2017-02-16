@@ -3,9 +3,9 @@
 namespace LKDevelopment\LaravelRefreshDemo;
 
 use Carbon\Carbon;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Foundation\Application;
 use LKDevelopment\LaravelRefreshDemo\Injector\JavascriptInjector;
 
 /**
@@ -46,7 +46,7 @@ class RefreshDemo
         if ($this->checkIfNeedRefresh() === true) {
             $refresherClassName = config('refresh-demo.refresher');
             $refresher = new $refresherClassName();
-            /**
+            /*
              * @var \LKDevelopment\LaravelRefreshDemo\Refresher\BaseRefresher $refresher
              */
             $refresher->refreshData();
@@ -98,7 +98,7 @@ class RefreshDemo
         }
         if ($this->enabled === true) {
             $this->performRefreshIfNeeded();
-            if (!$this->app->runningInConsole() && !$this->checkIfJsonRequest($request) && !$this->doNotInjectOnDebugBarRequests($request)) {
+            if (! $this->app->runningInConsole() && ! $this->checkIfJsonRequest($request) && ! $this->doNotInjectOnDebugBarRequests($request)) {
                 $this->injectDemoRefreshPopUp($response);
             }
         }

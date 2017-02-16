@@ -2,12 +2,12 @@
 
 namespace LKDevelopment\LaravelRefreshDemo\Middleware;
 
-use Closure;
 use Error;
+use Closure;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Debug\ExceptionHandler;
-use Illuminate\Http\Request;
 use LKDevelopment\LaravelRefreshDemo\RefreshDemo;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 
@@ -79,7 +79,7 @@ class RefreshDemoMiddleware
      */
     protected function handleException($passable, Exception $e)
     {
-        if (!$this->container->bound(ExceptionHandler::class) || !$passable instanceof Request) {
+        if (! $this->container->bound(ExceptionHandler::class) || ! $passable instanceof Request) {
             throw $e;
         }
         $handler = $this->container->make(ExceptionHandler::class);

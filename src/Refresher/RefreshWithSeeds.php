@@ -2,9 +2,9 @@
 
 namespace LKDevelopment\LaravelRefreshDemo\Refresher;
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Artisan;
 
 class RefreshWithSeeds extends BaseRefresher
 {
