@@ -4,8 +4,8 @@ namespace LKDevelopment\LaravelRefreshDemo;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use LKDevelopment\LaravelRefreshDemo\Facade\RefreshDemo as RefreshDemoFacade;
 use LKDevelopment\LaravelRefreshDemo\Middleware\RefreshDemoMiddleware;
+use LKDevelopment\LaravelRefreshDemo\Facade\RefreshDemo as RefreshDemoFacade;
 
 /**
  * Class LaravelRefreshDemoServiceProvider.
