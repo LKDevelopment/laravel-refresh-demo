@@ -111,7 +111,7 @@ class RefreshDemo
         }
         if ($this->enabled === true) {
             $this->performRefreshIfNeeded();
-            if (!$this->app->runningInConsole()) {
+            if (!$this->app->runningInConsole() && !$this->checkIfJsonRequest($request) && !$this->doNotInjectOnDebugBarRequests($request)) {
                 $this->injectDemoRefreshPopUp($response);
             }
         }
@@ -158,5 +158,28 @@ class RefreshDemo
     public function calculateTimeStampForNextRefresh(Carbon $carbon)
     {
         return $carbon->second(0)->addSeconds(config('refresh-demo.refreshAllMinutes'));
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    protected function checkIfJsonRequest(Request $request){
+        // If XmlHttpRequest, return true
+        if ($request->isXmlHttpRequest()) {
+            return true;
+        }
+
+        // Check if the request wants Json
+        $acceptable = $request->getAcceptableContentTypes();
+        return (isset($acceptable[0]) && $acceptable[0] == 'application/json');
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    protected function doNotInjectOnDebugBarRequests(Request $request){
+        return ($request->segment(1) == '_debugbar');
     }
 }
