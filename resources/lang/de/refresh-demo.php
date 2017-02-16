@@ -8,5 +8,5 @@ return [
     'infoLine' => [
         'text' => 'Nächstes Zurücksetzen der Demo Anwendung um {time} Uhr',
         'dateTimeFormat' => 'H:i',
-    ]
+    ],
 ];
