@@ -7,7 +7,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use LKDevelopment\LaravelRefreshDemo\Injector\JavascriptInjector;
-use LKDevelopment\LaravelRefreshDemo\Refresher\BaseRefresher;
 
 /**
  * Class DemoRefresh.
@@ -47,8 +46,8 @@ class RefreshDemo
         if ($this->checkIfNeedRefresh() === true) {
             $refresherClassName = config('refresh-demo.refresher');
             $refresher = new $refresherClassName();
-            /*
-             * @var BaseRefresher $refresher
+            /**
+             * @var \LKDevelopment\LaravelRefreshDemo\Refresher\BaseRefresher $refresher
              */
             $refresher->refreshData();
             $this->placeRefreshTimestampFile();
