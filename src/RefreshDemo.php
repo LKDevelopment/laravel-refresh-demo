@@ -93,7 +93,7 @@ class RefreshDemo
      */
     public function modifyResponse(Request $request, Response $response)
     {
-        if ($this->enabled == null) {
+        if ($this->enabled === null) {
             $this->boot();
         }
         if ($this->enabled === true) {
