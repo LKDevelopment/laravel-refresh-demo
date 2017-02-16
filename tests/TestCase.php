@@ -16,6 +16,7 @@ abstract class TestCase extends Orchestra
 
     public function setUp()
     {
+        parent::setUp();
         $this->withFactories(__DIR__.'/TestApp/factory.php');
     }
 
