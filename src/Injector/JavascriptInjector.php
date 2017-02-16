@@ -2,10 +2,8 @@
 
 namespace LKDevelopment\LaravelRefreshDemo\Injector;
 
-
 class JavascriptInjector extends BaseInjector
 {
-
     /**
      * @return string
      */
@@ -13,10 +11,11 @@ class JavascriptInjector extends BaseInjector
     {
         $pos = strripos($this->baseHtmlString, '</body>');
         if (false !== $pos) {
-            $content = substr($this->baseHtmlString, 0, $pos) . $this->renderInjectableContent() . substr($this->baseHtmlString, $pos);
+            $content = substr($this->baseHtmlString, 0, $pos).$this->renderInjectableContent().substr($this->baseHtmlString, $pos);
         } else {
-            $content = $this->baseHtmlString . $this->renderInjectableContent();
+            $content = $this->baseHtmlString.$this->renderInjectableContent();
         }
+
         return $content;
     }
 

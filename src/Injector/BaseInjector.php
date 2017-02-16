@@ -2,10 +2,8 @@
 
 namespace LKDevelopment\LaravelRefreshDemo\Injector;
 
-
 /**
- * Class BaseInjector
- * @package LKDevelopment\LaravelRefreshDemo\Middleware\Injector
+ * Class BaseInjector.
  */
 abstract class BaseInjector
 {
@@ -16,6 +14,7 @@ abstract class BaseInjector
 
     /**
      * BaseInjector constructor.
+     *
      * @param $baseHtmlString
      */
     public function __construct($baseHtmlString)
@@ -26,10 +25,10 @@ abstract class BaseInjector
     /**
      * @return string
      */
-    public abstract function inject();
+    abstract public function inject();
 
     /**
      * @return string
      */
-    protected abstract function renderInjectableContent();
+    abstract protected function renderInjectableContent();
 }

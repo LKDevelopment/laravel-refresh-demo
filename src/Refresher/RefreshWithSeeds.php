@@ -2,14 +2,12 @@
 
 namespace LKDevelopment\LaravelRefreshDemo\Refresher;
 
-
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class RefreshWithSeeds extends BaseRefresher
 {
-
     /**
      * @return void
      */
@@ -17,7 +15,7 @@ class RefreshWithSeeds extends BaseRefresher
     {
         $this->truncateTables();
         foreach (config('refresh-demo.RefreshWithSeedsConfiguration.seeder') as $seeder) {
-            Artisan::call('db:seed',['--class' => $seeder]);
+            Artisan::call('db:seed', ['--class' => $seeder]);
         }
     }
 

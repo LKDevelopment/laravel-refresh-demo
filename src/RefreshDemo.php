@@ -2,7 +2,6 @@
 
 namespace LKDevelopment\LaravelRefreshDemo;
 
-
 use Carbon\Carbon;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -11,26 +10,23 @@ use LKDevelopment\LaravelRefreshDemo\Injector\JavascriptInjector;
 use LKDevelopment\LaravelRefreshDemo\Refresher\BaseRefresher;
 
 /**
- * Class DemoRefresh
- * @package LKDevelopment\LaravelRefreshDemo
+ * Class DemoRefresh.
  */
 class RefreshDemo
 {
-    /**
-     *
-     */
     const TIME_STORAGE_FILE_NAME = 'demo_refresh';
     /**
      * @var Application
      */
     protected $app;
     /**
-     * @var boolean
+     * @var bool
      */
     protected $enabled;
 
     /**
      * DemoRefresh constructor.
+     *
      * @param Application $application
      */
     public function __construct(Application $application)
@@ -38,9 +34,6 @@ class RefreshDemo
         $this->app = $application;
     }
 
-    /**
-     *
-     */
     public function boot()
     {
         $this->enabled = config('refresh-demo.enabled');
@@ -54,13 +47,12 @@ class RefreshDemo
         if ($this->checkIfNeedRefresh() === true) {
             $refresherClassName = config('refresh-demo.refresher');
             $refresher = new $refresherClassName();
-            /**
+            /*
              * @var BaseRefresher $refresher
              */
             $refresher->refreshData();
             $this->placeRefreshTimestampFile();
         }
-
     }
 
     /**
@@ -68,7 +60,7 @@ class RefreshDemo
      */
     protected function checkIfNeedRefresh()
     {
-        $path = storage_path('app/' . self::TIME_STORAGE_FILE_NAME);
+        $path = storage_path('app/'.self::TIME_STORAGE_FILE_NAME);
         if (file_exists($path)) {
             $timestampFromFile = file_get_contents($path);
             $timeFromFile = Carbon::createFromTimestamp($timestampFromFile);
@@ -76,6 +68,7 @@ class RefreshDemo
                 return false;
             }
         }
+
         return true;
     }
 
@@ -84,7 +77,7 @@ class RefreshDemo
      */
     protected function placeRefreshTimestampFile()
     {
-        $path = storage_path('app/' . self::TIME_STORAGE_FILE_NAME);
+        $path = storage_path('app/'.self::TIME_STORAGE_FILE_NAME);
         if (file_exists($path)) {
             unlink($path);
         }
@@ -94,13 +87,14 @@ class RefreshDemo
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
+     *
      * @return Response
      */
     public function modifyResponse(Request $request, Response $response)
     {
-        if($this->enabled == null){
+        if ($this->enabled == null) {
             $this->boot();
         }
         if ($this->enabled === true) {
@@ -109,6 +103,7 @@ class RefreshDemo
                 $this->injectDemoRefreshPopUp($response);
             }
         }
+
         return $response;
     }
 
@@ -119,11 +114,11 @@ class RefreshDemo
     {
         $content = $response->getContent();
         /**
-         * Inject Layout to Response
+         * Inject Layout to Response.
          */
         $content = with(new JavascriptInjector($content))->inject();
 
-        /**
+        /*
          * Copied from Barry vd. Heuvel
          */
         $response->setContent($content);
@@ -135,18 +130,20 @@ class RefreshDemo
      */
     public static function getNextRollback()
     {
-        $path = storage_path('app/' . self::TIME_STORAGE_FILE_NAME);
+        $path = storage_path('app/'.self::TIME_STORAGE_FILE_NAME);
 
         if (file_exists($path)) {
             $carbon = Carbon::createFromTimestamp(file_get_contents($path));
         } else {
             $carbon = Carbon::now();
         }
+
         return \RefreshDemo::calculateTimeStampForNextRefresh($carbon);
     }
 
     /**
      * @param \Carbon\Carbon $carbon
+     *
      * @return \Carbon\Carbon
      */
     public function calculateTimeStampForNextRefresh(Carbon $carbon)
@@ -156,9 +153,11 @@ class RefreshDemo
 
     /**
      * @param Request $request
+     *
      * @return bool
      */
-    protected function checkIfJsonRequest(Request $request){
+    protected function checkIfJsonRequest(Request $request)
+    {
         // If XmlHttpRequest, return true
         if ($request->isXmlHttpRequest()) {
             return true;
@@ -166,14 +165,17 @@ class RefreshDemo
 
         // Check if the request wants Json
         $acceptable = $request->getAcceptableContentTypes();
-        return (isset($acceptable[0]) && $acceptable[0] == 'application/json');
+
+        return isset($acceptable[0]) && $acceptable[0] == 'application/json';
     }
 
     /**
      * @param Request $request
+     *
      * @return bool
      */
-    protected function doNotInjectOnDebugBarRequests(Request $request){
-        return ($request->segment(1) == '_debugbar');
+    protected function doNotInjectOnDebugBarRequests(Request $request)
+    {
+        return $request->segment(1) == '_debugbar';
     }
 }
